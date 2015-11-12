@@ -10,3 +10,5 @@ tar.gz
 .project 
 */.settings/
 target/scala-2.11/*
+target/scala-2.11/**
+*target/scala-2.11/**
