@@ -2,3 +2,10 @@
 */target/**
 target/*
 target/**
+target/* 
+/target/ 
+.metadata 
+tar.gz 
+.classpath 
+.project 
+*/.settings/
