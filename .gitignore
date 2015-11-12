@@ -9,3 +9,4 @@ tar.gz
 .classpath 
 .project 
 */.settings/
+target/scala-2.11/*
