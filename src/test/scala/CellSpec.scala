@@ -19,7 +19,7 @@ class CellSpec extends FunSpecLike with Matchers with Inside {
         val testCell = new Alive(livingNeighbours)
         val result: Cell = Cell.rules(testCell)
         inside(result) {
-          case Dead(an) => an should be(livingNeighbours)
+          case Dead(i) => i should be(livingNeighbours)
         }
       }
 
