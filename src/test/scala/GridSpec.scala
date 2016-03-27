@@ -6,13 +6,13 @@ class GridSpec  extends FunSpecLike with Matchers {
   val rdm = new Random
 
   def fixture() = new {
-    val infinite = Grid.initialize
+    val grid = Grid.initialize
   }
 
   describe("create a new grid") {
     it("creates an infinite grid entirely of dead cells") {
       val f = fixture()
-      val result = f.infinite.getCell(
+      val result = f.grid.getCell(
         Coordinate(rdm.nextInt(), rdm.nextInt())
       )
       result should be(Dead)
@@ -23,7 +23,7 @@ class GridSpec  extends FunSpecLike with Matchers {
     it("allows me to set a dead cell in a grid to be alive") {
       val f = fixture()
       val coord = Coordinate(rdm.nextInt(), rdm.nextInt())
-      f.infinite.setAlive(coord).getCell(coord) should be(Alive)
+      f.grid.setAlive(coord).getCell(coord) should be(Alive)
     }
   }
 
@@ -31,7 +31,7 @@ class GridSpec  extends FunSpecLike with Matchers {
     it("allows me to a living cell in the grid to be dead") {
       val f = fixture()
       val coord = Coordinate(rdm.nextInt(), rdm.nextInt())
-      f.infinite.setAlive(coord).setDead(coord).getCell(coord) should be(Dead)
+      f.grid.setAlive(coord).setDead(coord).getCell(coord) should be(Dead)
     }
   }
 
@@ -39,12 +39,12 @@ class GridSpec  extends FunSpecLike with Matchers {
     it("in next generation of a grid with one alive cell, that cell will be dead") {
       val f = fixture()
       val coord = Coordinate(rdm.nextInt(), rdm.nextInt())
-      f.infinite.setAlive(coord).nextGeneration.getCell(coord) should be(Dead)
+      f.grid.setAlive(coord).nextGeneration.getCell(coord) should be(Dead)
     }
 
     it("in the next generation of a grid with a dead cell with three neighbours, that cell will be alive") {
       val f = fixture()
-      val firstGen = f.infinite
+      val firstGen = f.grid
         .setAlive(Coordinate(0, 0))
         .setAlive(Coordinate(0, 1))
         .setAlive(Coordinate(0, 2))
