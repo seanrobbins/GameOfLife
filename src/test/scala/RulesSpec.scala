@@ -16,7 +16,7 @@ class RulesSpec extends FunSpecLike with Matchers with Inside {
       }
 
       describe("survival rule") {
-        it("allow a live cell that has two or more live neighbours to survive") {
+        it("allow a live cell that has two or three live neighbours to survive") {
           val rnd = new scala.util.Random
           val range = 2 to 3
           val livingNeighbours = range(rnd.nextInt(range.length))
