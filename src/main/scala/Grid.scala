@@ -8,14 +8,14 @@ case class Grid private(private val vector: Vector[Coordinate] = Vector()) {
   def getCell(coordinate: Coordinate): Cell = if(vector contains coordinate) Alive else Dead
 
   def nextGeneration: Grid = {
-    val nextVector =  applyCellRules(vector, Vector()) ++ applyRulesForNeighbourCells(vector, Vector())
-
-    Grid(nextVector.distinct)
+    val nextVector = createNextGenerationVector(vector, Vector())
+    Grid(nextVector)
   }
 
-  private def livingNeighbours(coord: Coordinate): Integer = {
-    val neighbourCells = for { neighbour <- coord.neighbours } yield getCell(neighbour)
-    neighbourCells count Alive.==
+  @tailrec
+  private def createNextGenerationVector(v: Vector[Coordinate], result: Vector[Coordinate]): Vector[Coordinate] = {
+    if(v.isEmpty) result.distinct
+    else createNextGenerationVector(v.tail, result ++ applyCellRules(v.head.neighbourhood, Vector()))
   }
 
   @tailrec
@@ -29,14 +29,9 @@ case class Grid private(private val vector: Vector[Coordinate] = Vector()) {
     }
   }
 
-  @tailrec
-  private def applyRulesForNeighbourCells(v: Vector[Coordinate], result: Vector[Coordinate]): Vector[Coordinate] = {
-    if(v.isEmpty) result.distinct
-    else {
-      applyRulesForNeighbourCells(v.tail, result ++
-        applyCellRules(v.head.neighbours, Vector())
-      )
-    }
+  private def livingNeighbours(coord: Coordinate): Integer = {
+    val neighbourCells = for { neighbour <- coord.neighbours } yield getCell(neighbour)
+    neighbourCells count Alive.==
   }
 }
 
